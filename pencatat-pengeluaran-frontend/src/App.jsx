@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "./components/Header";
 import FormTambah from "./components/FormTambah";
 import RingkasanTotal from "./components/RingkasanTotal";
@@ -13,14 +14,20 @@ const dataAwal = [
 ];
 
 function App() {
-  const total = dataAwal.reduce((jumlah, item) => jumlah + item.nominal, 0);
+  const [daftar, setDaftar] = useState(dataAwal);
+
+  const tambahPengeluaran = (itemBaru) => {
+    setDaftar([...daftar, { id: Date.now(), ...itemBaru }]);
+  };
+
+  const total = daftar.reduce((jumlah, item) => jumlah + item.nominal, 0);
 
   return (
     <div className="container">
       <Header judul="Pencatat Pengeluaran" subjudul="Catat uang keluar harianmu dengan rapi" />
-      <RingkasanTotal jumlahData={dataAwal.length} totalNominal={total} />
-      <FormTambah />
-      <DaftarPengeluaran daftar={dataAwal} />
+      <RingkasanTotal jumlahData={daftar.length} totalNominal={total} />
+      <FormTambah onTambah={tambahPengeluaran} />
+      <DaftarPengeluaran daftar={daftar} />
     </div>
   );
 }
