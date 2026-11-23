@@ -1,4 +1,4 @@
-# Pencatat Pengeluaran
+# Receh
 
 Aplikasi pencatat pengeluaran harian yang dibangun menggunakan React 19 + Vite sebagai frontend dan NestJS sebagai backend. Aplikasi membantu pengguna mencatat, melihat, mengubah, dan menghapus transaksi pengeluaran.
 
