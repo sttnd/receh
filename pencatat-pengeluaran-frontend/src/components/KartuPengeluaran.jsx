@@ -1,13 +1,33 @@
-function KartuPengeluaran({ keterangan, kategori, nominal, tanggal }) {
+function KartuPengeluaran({ item, onEdit, onDelete, isDeleting }) {
   return (
     <article className="kartu">
-      <div>
-        <h3>{keterangan}</h3>
-        <small>
-          {kategori} • {tanggal}
-        </small>
+      <div className="kartu-info">
+        <span className="kategori-label">{item.kategori}</span>
+        <h3>{item.keterangan}</h3>
+        <small>{item.tanggal}</small>
       </div>
-      <strong>Rp {nominal.toLocaleString("id-ID")}</strong>
+
+      <div className="kartu-actions">
+        <strong>Rp {Number(item.nominal).toLocaleString("id-ID")}</strong>
+        <div className="action-buttons">
+          <button
+            type="button"
+            className="button button-light button-small"
+            onClick={() => onEdit(item)}
+            disabled={isDeleting}
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            className="button button-danger button-small"
+            onClick={() => onDelete(item.id)}
+            disabled={isDeleting}
+          >
+            {isDeleting ? "Menghapus..." : "Hapus"}
+          </button>
+        </div>
+      </div>
     </article>
   );
 }

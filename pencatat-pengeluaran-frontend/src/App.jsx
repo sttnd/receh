@@ -1,34 +1,130 @@
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Header from "./components/Header";
 import FormTambah from "./components/FormTambah";
 import RingkasanTotal from "./components/RingkasanTotal";
 import DaftarPengeluaran from "./components/DaftarPengeluaran";
+import { pengeluaranApi } from "./services/pengeluaranApi";
 import "./App.css";
 
-const dataAwal = [
-  { id: 1, keterangan: "Makan siang di warteg", kategori: "Makanan", nominal: 15000, tanggal: "2026-10-20" },
-  { id: 2, keterangan: "Bensin motor", kategori: "Transportasi", nominal: 25000, tanggal: "2026-10-21" },
-  { id: 3, keterangan: "Fotokopi modul praktikum", kategori: "Pendidikan", nominal: 12000, tanggal: "2026-10-22" },
-  { id: 4, keterangan: "Paket data bulanan", kategori: "Lainnya", nominal: 55000, tanggal: "2026-10-23" },
-  { id: 5, keterangan: "Nonton bareng teman", kategori: "Hiburan", nominal: 40000, tanggal: "2026-10-24" },
-];
-
 function App() {
-  const [daftar, setDaftar] = useState(dataAwal);
+  const [daftar, setDaftar] = useState([]);
+  const [editingItem, setEditingItem] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
+  const [error, setError] = useState("");
 
-  const tambahPengeluaran = (itemBaru) => {
-    setDaftar([...daftar, { id: Date.now(), ...itemBaru }]);
+  const muatPengeluaran = useCallback(async () => {
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const data = await pengeluaranApi.findAll();
+      setDaftar(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    muatPengeluaran();
+  }, [muatPengeluaran]);
+
+  const total = useMemo(
+    () => daftar.reduce((jumlah, item) => jumlah + Number(item.nominal), 0),
+    [daftar],
+  );
+
+  const simpanPengeluaran = async (data) => {
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      if (editingItem) {
+        const updated = await pengeluaranApi.update(editingItem.id, data);
+        setDaftar((current) =>
+          current.map((item) => (item.id === updated.id ? updated : item)),
+        );
+        setEditingItem(null);
+      } else {
+        const created = await pengeluaranApi.create(data);
+        setDaftar((current) => [created, ...current]);
+      }
+
+      return true;
+    } catch (err) {
+      setError(err.message);
+      return false;
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const total = daftar.reduce((jumlah, item) => jumlah + item.nominal, 0);
+  const hapusPengeluaran = async (id) => {
+    const disetujui = window.confirm(
+      "Apakah kamu yakin ingin menghapus transaksi ini?",
+    );
+
+    if (!disetujui) return;
+
+    setDeletingId(id);
+    setError("");
+
+    try {
+      await pengeluaranApi.remove(id);
+      setDaftar((current) => current.filter((item) => item.id !== id));
+
+      if (editingItem?.id === id) {
+        setEditingItem(null);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   return (
-    <div className="container">
-      <Header judul="Pencatat Pengeluaran" subjudul="Catat uang keluar harianmu dengan rapi" />
+    <main className="container">
+      <Header
+        judul="Pencatat Pengeluaran"
+        subjudul="Catat dan kelola pengeluaran harianmu dengan lebih rapi"
+      />
+
       <RingkasanTotal jumlahData={daftar.length} totalNominal={total} />
-      <FormTambah onTambah={tambahPengeluaran} />
-      <DaftarPengeluaran daftar={daftar} />
-    </div>
+
+      {error && (
+        <div className="alert-error" role="alert">
+          <span>{error}</span>
+          <button
+            type="button"
+            className="alert-close"
+            onClick={() => setError("")}
+            aria-label="Tutup pesan"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
+      <FormTambah
+        key={editingItem?.id ?? "new"}
+        onSubmit={simpanPengeluaran}
+        initialData={editingItem}
+        onCancel={() => setEditingItem(null)}
+        isSubmitting={isSubmitting}
+      />
+
+      <DaftarPengeluaran
+        daftar={daftar}
+        isLoading={isLoading}
+        deletingId={deletingId}
+        onEdit={setEditingItem}
+        onDelete={hapusPengeluaran}
+      />
+    </main>
   );
 }
 

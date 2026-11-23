@@ -1,13 +1,15 @@
 function RingkasanTotal({ jumlahData, totalNominal }) {
   return (
     <section className="ringkasan">
-      <div>
-        <span>Jumlah Transaksi</span>
+      <div className="summary-card">
+        <span className="summary-label">Jumlah Transaksi</span>
         <strong>{jumlahData}</strong>
+        <small>Seluruh catatan pengeluaran</small>
       </div>
-      <div>
-        <span>Total Pengeluaran</span>
+      <div className="summary-card summary-highlight">
+        <span className="summary-label">Total Pengeluaran</span>
         <strong>Rp {totalNominal.toLocaleString("id-ID")}</strong>
+        <small>Akumulasi nominal transaksi</small>
       </div>
     </section>
   );
