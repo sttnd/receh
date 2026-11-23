@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import FormTambah from "./FormTambah";
 import KartuPengeluaran from "./KartuPengeluaran";
-import { KATEGORI_PENGELUARAN, POS_ANGGARAN, formatRupiah } from "../utils/finance";
+import { KATEGORI_PENGELUARAN, POS_ANGGARAN, SUMBER_DANA, formatRupiah } from "../utils/finance";
 
 function TransaksiPage({
   transactions,
@@ -18,6 +18,7 @@ function TransaksiPage({
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("Semua kategori");
   const [bucketFilter, setBucketFilter] = useState("Semua pos");
+  const [sourceFilter, setSourceFilter] = useState("Semua sumber dana");
 
   const filteredTransactions = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -25,9 +26,10 @@ function TransaksiPage({
       const matchesSearch = !query || item.keterangan.toLowerCase().includes(query);
       const matchesCategory = categoryFilter === "Semua kategori" || item.kategori === categoryFilter;
       const matchesBucket = bucketFilter === "Semua pos" || (item.posAnggaran || "Pokok") === bucketFilter;
-      return matchesSearch && matchesCategory && matchesBucket;
+      const matchesSource = sourceFilter === "Semua sumber dana" || (item.sumberDana || "Tunai") === sourceFilter;
+      return matchesSearch && matchesCategory && matchesBucket && matchesSource;
     });
-  }, [transactions, search, categoryFilter, bucketFilter]);
+  }, [transactions, search, categoryFilter, bucketFilter, sourceFilter]);
 
   const totalFiltered = filteredTransactions.reduce((sum, item) => sum + Number(item.nominal), 0);
 
@@ -59,6 +61,10 @@ function TransaksiPage({
           <select value={bucketFilter} onChange={(event) => setBucketFilter(event.target.value)} aria-label="Filter pos anggaran">
             <option>Semua pos</option>
             {POS_ANGGARAN.map((item) => <option key={item}>{item}</option>)}
+          </select>
+          <select value={sourceFilter} onChange={(event) => setSourceFilter(event.target.value)} aria-label="Filter sumber dana">
+            <option>Semua sumber dana</option>
+            {SUMBER_DANA.map((item) => <option key={item}>{item}</option>)}
           </select>
         </div>
 

@@ -1,5 +1,17 @@
 export const POS_ANGGARAN = ["Pokok", "Nabung", "Belanja"];
 
+export const SUMBER_DANA = [
+  "Tunai",
+  "Rekening Bank",
+  "GoPay",
+  "DANA",
+  "OVO",
+  "ShopeePay",
+  "Kartu Debit",
+  "Kartu Kredit",
+  "Lainnya",
+];
+
 export const KATEGORI_PENGELUARAN = [
   "Makanan",
   "Transportasi",

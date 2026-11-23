@@ -176,7 +176,7 @@
 .history-total { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
 .history-total span { color: #a0aaa4; font-size: 9px; }
 .history-total strong { color: #31473a; font-family: Manrope, sans-serif; font-size: 15px; }
-.filter-row { display: grid; grid-template-columns: minmax(170px, 1fr) 170px 150px; gap: 9px; padding: 13px 0 8px; border-top: 1px solid #f0f3f0; }
+.filter-row { display: grid; grid-template-columns: minmax(170px, 1fr) 150px 135px 160px; gap: 9px; padding: 13px 0 8px; border-top: 1px solid #f0f3f0; }
 .filter-row select { min-height: 38px; padding: 8px 10px; font-size: 10px; }
 .search-field { display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 10px; }
 .search-field > span { color: #94a197; font-size: 18px; }

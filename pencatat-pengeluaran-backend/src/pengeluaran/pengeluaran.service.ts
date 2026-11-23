@@ -16,6 +16,7 @@ export class PengeluaranService {
       keterangan: 'Belanja kebutuhan dapur',
       kategori: 'Makanan',
       posAnggaran: 'Pokok',
+      sumberDana: 'Tunai',
       nominal: 85000,
       tanggal: '2026-11-20',
       createdAt: new Date('2026-11-20T08:00:00.000Z'),
@@ -25,6 +26,7 @@ export class PengeluaranService {
       keterangan: 'Isi bensin motor',
       kategori: 'Transportasi',
       posAnggaran: 'Pokok',
+      sumberDana: 'GoPay',
       nominal: 30000,
       tanggal: '2026-11-21',
       createdAt: new Date('2026-11-21T08:00:00.000Z'),
@@ -34,6 +36,7 @@ export class PengeluaranService {
       keterangan: 'Bayar paket internet',
       kategori: 'Tagihan',
       posAnggaran: 'Pokok',
+      sumberDana: 'Rekening Bank',
       nominal: 65000,
       tanggal: '2026-11-22',
       createdAt: new Date('2026-11-22T08:00:00.000Z'),
@@ -43,6 +46,7 @@ export class PengeluaranService {
       keterangan: 'Kopi dan camilan',
       kategori: 'Hiburan',
       posAnggaran: 'Belanja',
+      sumberDana: 'DANA',
       nominal: 28000,
       tanggal: '2026-11-22',
       createdAt: new Date('2026-11-22T10:00:00.000Z'),
@@ -52,6 +56,7 @@ export class PengeluaranService {
       keterangan: 'Makan siang',
       kategori: 'Makanan',
       posAnggaran: 'Pokok',
+      sumberDana: 'Tunai',
       nominal: 22000,
       tanggal: '2026-11-23',
       createdAt: new Date('2026-11-23T05:00:00.000Z'),
@@ -129,6 +134,7 @@ export class PengeluaranService {
           candidate.keterangan?.trim().toLowerCase() &&
         item.kategori === candidate.kategori &&
         item.posAnggaran === candidate.posAnggaran &&
+        item.sumberDana === candidate.sumberDana &&
         item.nominal === candidate.nominal &&
         item.tanggal === candidate.tanggal,
     );

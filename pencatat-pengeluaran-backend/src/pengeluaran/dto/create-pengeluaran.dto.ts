@@ -14,6 +14,8 @@ import {
   KategoriPengeluaran,
   POS_ANGGARAN,
   PosAnggaran,
+  SUMBER_DANA,
+  SumberDana,
 } from '../entities/pengeluaran.entity';
 
 export class CreatePengeluaranDto {
@@ -31,6 +33,11 @@ export class CreatePengeluaranDto {
     message: 'Pos anggaran harus Pokok, Nabung, atau Belanja.',
   })
   posAnggaran: PosAnggaran;
+
+  @IsIn([...SUMBER_DANA], {
+    message: 'Sumber dana tidak valid.',
+  })
+  sumberDana: SumberDana;
 
   @Type(() => Number)
   @IsNumber(

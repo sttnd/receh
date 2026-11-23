@@ -1,49 +1,52 @@
 # Receh
 
-Aplikasi pencatat pengeluaran harian yang dibangun menggunakan React 19 + Vite sebagai frontend dan NestJS sebagai backend. Aplikasi membantu pengguna mencatat, melihat, mengubah, dan menghapus transaksi pengeluaran.
+Receh adalah aplikasi pengelolaan uang bulanan dan pencatatan pengeluaran. Aplikasi membantu pengguna membagi uang bulanan ke tiga pos, memantau penggunaan dana, dan mencatat transaksi harian.
 
 ## Struktur Repository
 
 ```text
-pencatat-pengeluaran/
-├── pencatat-pengeluaran-frontend/   # React + Vite
-├── pencatat-pengeluaran-backend/    # NestJS REST API
-│   ├── src/
-│   │   ├── pengeluaran/
-│   │   │   ├── dto/
-│   │   │   ├── entities/
-│   │   │   ├── pengeluaran.controller.ts
-│   │   │   ├── pengeluaran.service.ts
-│   │   │   └── pengeluaran.module.ts
-│   │   ├── app..controller.ts
-│   │   ├── app.module.ts
-│   │   ├── app.service.ts
-│   │   └── main.ts
-│   └── rest-client/
-│       └── pengeluaran.http
+receh/
+├── pencatat-pengeluaran-frontend/
+│   ├── public/
+│   └── src/
+│       ├── components/
+│       ├── services/
+│       ├── utils/
+│       ├── App.jsx
+│       ├── App.css
+│       └── index.css
+├── pencatat-pengeluaran-backend/
+│   ├── rest-client/
+│   └── src/
+│       ├── anggaran/
+│       ├── pengeluaran/
+│       ├── app.module.ts
+│       └── main.ts
 └── docs/
     └── screenshots/
 ```
 
 ## Teknologi
 
-- React 19 dan Vite
-- NestJS 11
-- TypeScript
-- class-validator dan class-transformer
-- REST Client untuk pengujian API
+- Frontend: React 19 dan Vite
+- Backend: NestJS 11 dan TypeScript
+- Validasi: class-validator dan class-transformer
+- API: REST API dengan JSON
+- Pengujian API: REST Client untuk Visual Studio Code
 
-## Data Utama
+## Struktur Data Transaksi
 
-Data utama aplikasi adalah **Pengeluaran**. Setiap transaksi memiliki enam properti:
+Data utama aplikasi adalah `Pengeluaran`.
 
-| Field | Tipe data | Keterangan |
+| Field | Tipe | Keterangan |
 |---|---|---|
 | `id` | number | ID unik transaksi |
-| `keterangan` | string | Deskripsi pengeluaran |
-| `kategori` | string | Kategori pengeluaran |
-| `nominal` | number | Jumlah uang yang dikeluarkan |
+| `keterangan` | string | Deskripsi transaksi |
+| `kategori` | string | Makanan, Transportasi, Pendidikan, Tagihan, Kesehatan, Hiburan, Belanja, atau Lainnya |
+| `posAnggaran` | string | Pokok, Nabung, atau Belanja |
+| `sumberDana` | string | Tunai, Rekening Bank, GoPay, DANA, OVO, ShopeePay, Kartu Debit, Kartu Kredit, atau Lainnya |
+| `nominal` | number | Nominal pengeluaran |
 | `tanggal` | string | Tanggal transaksi dengan format YYYY-MM-DD |
 | `createdAt` | Date | Waktu data dibuat |
 
-Kategori yang tersedia adalah Makanan, Transportasi, Pendidikan, Hiburan, dan Lainnya.
+`posAnggaran` dan `sumberDana` memiliki fungsi berbeda. `posAnggaran` menentukan alokasi uang yang digunakan dalam sistem anggaran berjenjang. `sumberDana` mencatat media penyimpanan atau metode pembayaran transaksi.

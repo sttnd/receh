@@ -24,6 +24,8 @@ function KartuPengeluaran({ item, onEdit, onDelete, isDeleting }) {
           <span className="meta-dot">·</span>
           <span>{item.posAnggaran || "Pokok"}</span>
           <span className="meta-dot">·</span>
+          <span>{item.sumberDana || "Tunai"}</span>
+          <span className="meta-dot">·</span>
           <span>{formatDate(item.tanggal)}</span>
         </div>
       </div>

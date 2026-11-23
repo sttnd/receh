@@ -13,6 +13,7 @@ Content-Type: application/json
   "keterangan": "Makan siang",
   "kategori": "Makanan",
   "posAnggaran": "Pokok",
+  "sumberDana": "Tunai",
   "nominal": 25000,
   "tanggal": "2026-11-23"
 }
@@ -26,7 +27,8 @@ Content-Type: application/json
 
 {
   "nominal": 30000,
-  "posAnggaran": "Nabung"
+  "posAnggaran": "Nabung",
+  "sumberDana": "GoPay"
 }
 
 ### DELETE - hapus transaksi
@@ -43,6 +45,7 @@ Content-Type: application/json
   "keterangan": "Belanja kebutuhan dapur",
   "kategori": "Makanan",
   "posAnggaran": "Pokok",
+  "sumberDana": "Tunai",
   "nominal": 85000,
   "tanggal": "2026-11-20"
 }
@@ -57,6 +60,19 @@ Content-Type: application/json
   "posAnggaran": "Pokok",
   "nominal": -100,
   "tanggal": "bukan-tanggal"
+}
+
+### ERROR 400 - sumber dana tidak valid
+POST {{baseUrl}}/pengeluaran
+Content-Type: application/json
+
+{
+  "keterangan": "Makan sore",
+  "kategori": "Makanan",
+  "posAnggaran": "Pokok",
+  "sumberDana": "Dompet Digital Tidak Dikenal",
+  "nominal": 18000,
+  "tanggal": "2026-11-23"
 }
 
 ### GET - anggaran bulanan (null jika belum disimpan)

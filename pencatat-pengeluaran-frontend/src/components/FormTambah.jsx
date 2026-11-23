@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { getToday, KATEGORI_PENGELUARAN, POS_ANGGARAN } from "../utils/finance";
+import { getToday, KATEGORI_PENGELUARAN, POS_ANGGARAN, SUMBER_DANA } from "../utils/finance";
 
 const createEmptyForm = () => ({
   keterangan: "",
   kategori: "Makanan",
   posAnggaran: "Pokok",
+  sumberDana: "Tunai",
   nominal: "",
   tanggal: getToday(),
 });
@@ -16,6 +17,7 @@ function FormTambah({ onSubmit, initialData, onCancel, isSubmitting }) {
           keterangan: initialData.keterangan,
           kategori: initialData.kategori,
           posAnggaran: initialData.posAnggaran || "Pokok",
+          sumberDana: initialData.sumberDana || "Tunai",
           nominal: String(initialData.nominal),
           tanggal: initialData.tanggal,
         }
@@ -43,6 +45,7 @@ function FormTambah({ onSubmit, initialData, onCancel, isSubmitting }) {
       keterangan,
       kategori: form.kategori,
       posAnggaran: form.posAnggaran,
+      sumberDana: form.sumberDana,
       nominal,
       tanggal: form.tanggal,
     });
@@ -82,6 +85,12 @@ function FormTambah({ onSubmit, initialData, onCancel, isSubmitting }) {
           </select>
         </label>
         <label className="field">
+          <span>Sumber dana</span>
+          <select name="sumberDana" value={form.sumberDana} onChange={handleChange}>
+            {SUMBER_DANA.map((sumber) => <option key={sumber} value={sumber}>{sumber}</option>)}
+          </select>
+        </label>
+        <label className="field">
           <span>Nominal (Rp)</span>
           <input name="nominal" type="number" placeholder="25000" value={form.nominal} onChange={handleChange} min="1" step="1" required />
         </label>
@@ -91,7 +100,7 @@ function FormTambah({ onSubmit, initialData, onCancel, isSubmitting }) {
         </label>
         <div className="form-hint field-wide">
           <span className="hint-icon">i</span>
-          Pengeluaran dari Pokok otomatis memakai Nabung, lalu Belanja jika saldo pos sebelumnya tidak cukup.
+          Pos anggaran menunjukkan alokasi (Pokok, Nabung, atau Belanja). Sumber dana menunjukkan tempat uang disimpan atau metode pembayaran. Pengeluaran tetap mengikuti urutan dana Pokok → Nabung → Belanja.
         </div>
         {formError && <p className="field-error field-wide">{formError}</p>}
         <button className="button button-primary field-wide" type="submit" disabled={isSubmitting}>

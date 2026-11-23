@@ -9,6 +9,7 @@ describe('PengeluaranService', () => {
     keterangan: 'Membeli buku catatan',
     kategori: 'Pendidikan',
     posAnggaran: 'Pokok',
+    sumberDana: 'Tunai',
     nominal: 22000,
     tanggal: '2026-11-23',
   };
@@ -35,6 +36,7 @@ describe('PengeluaranService', () => {
         keterangan: 'Belanja kebutuhan dapur',
         kategori: 'Makanan',
         posAnggaran: 'Pokok',
+        sumberDana: 'Tunai',
         nominal: 85000,
         tanggal: '2026-11-20',
       }),
