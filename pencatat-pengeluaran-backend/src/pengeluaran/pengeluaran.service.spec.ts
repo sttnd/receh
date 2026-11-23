@@ -8,6 +8,7 @@ describe('PengeluaranService', () => {
   const transaksiBaru: CreatePengeluaranDto = {
     keterangan: 'Membeli buku catatan',
     kategori: 'Pendidikan',
+    posAnggaran: 'Pokok',
     nominal: 22000,
     tanggal: '2026-11-23',
   };
@@ -25,15 +26,17 @@ describe('PengeluaranService', () => {
 
     expect(result.id).toBe(6);
     expect(result.keterangan).toBe(transaksiBaru.keterangan);
+    expect(result.posAnggaran).toBe('Pokok');
   });
 
   it('menolak transaksi duplikat dengan ConflictException', () => {
     expect(() =>
       service.create({
-        keterangan: 'Makan siang di warteg',
+        keterangan: 'Belanja kebutuhan dapur',
         kategori: 'Makanan',
-        nominal: 15000,
-        tanggal: '2026-10-20',
+        posAnggaran: 'Pokok',
+        nominal: 85000,
+        tanggal: '2026-11-20',
       }),
     ).toThrow(ConflictException);
   });

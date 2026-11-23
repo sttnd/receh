@@ -1,62 +1,85 @@
 @baseUrl = http://localhost:3000
 @id = 6
+@bulan = 2026-11
 
-### 0. Cek status backend
-GET {{baseUrl}}
-
-### 1. GET - Menampilkan seluruh pengeluaran
+### GET - seluruh transaksi
 GET {{baseUrl}}/pengeluaran
 
-### 2. POST - Menambahkan pengeluaran baru
-# Jalankan request ini terlebih dahulu. ID data baru akan muncul pada response.
-# Jika ID yang dihasilkan bukan 6, ubah variabel @id di bagian atas file.
+### POST - tambah transaksi
 POST {{baseUrl}}/pengeluaran
 Content-Type: application/json
 
 {
-  "keterangan": "Membeli alat tulis",
-  "kategori": "Pendidikan",
-  "nominal": 18000,
+  "keterangan": "Makan siang",
+  "kategori": "Makanan",
+  "posAnggaran": "Pokok",
+  "nominal": 25000,
   "tanggal": "2026-11-23"
 }
 
-### 3. GET - Menampilkan satu pengeluaran berdasarkan ID
+### GET - detail transaksi (ubah @id sesuai response POST)
 GET {{baseUrl}}/pengeluaran/{{id}}
 
-### 4. PATCH - Mengubah data pengeluaran
+### PATCH - ubah transaksi
 PATCH {{baseUrl}}/pengeluaran/{{id}}
 Content-Type: application/json
 
 {
-  "keterangan": "Membeli alat tulis dan buku",
-  "nominal": 25000
+  "nominal": 30000,
+  "posAnggaran": "Nabung"
 }
 
-### 5. DELETE - Menghapus data pengeluaran
+### DELETE - hapus transaksi
 DELETE {{baseUrl}}/pengeluaran/{{id}}
 
-### 6. Error - ID tidak ditemukan (NotFoundException / 404)
+### ERROR 404 - ID tidak ditemukan
 GET {{baseUrl}}/pengeluaran/999999
 
-### 7. Error - Transaksi duplikat (ConflictException / 409)
-# Data ini sama dengan data awal ID 1. Backend seharusnya mengembalikan 409 Conflict.
+### ERROR 409 - transaksi duplikat dengan data seed
 POST {{baseUrl}}/pengeluaran
 Content-Type: application/json
 
 {
-  "keterangan": "Makan siang di warteg",
+  "keterangan": "Belanja kebutuhan dapur",
   "kategori": "Makanan",
-  "nominal": 15000,
-  "tanggal": "2026-10-20"
+  "posAnggaran": "Pokok",
+  "nominal": 85000,
+  "tanggal": "2026-11-20"
 }
 
-### 8. Error - Validasi DTO (Bad Request / 400)
+### ERROR 400 - nominal tidak valid
 POST {{baseUrl}}/pengeluaran
 Content-Type: application/json
 
 {
-  "keterangan": "AB",
-  "kategori": "Belanja",
-  "nominal": -500,
-  "tanggal": "tanggal-salah"
+  "keterangan": "X",
+  "kategori": "Makanan",
+  "posAnggaran": "Pokok",
+  "nominal": -100,
+  "tanggal": "bukan-tanggal"
+}
+
+### GET - anggaran bulanan (null jika belum disimpan)
+GET {{baseUrl}}/anggaran/{{bulan}}
+
+### PUT - simpan / ubah anggaran bulanan
+PUT {{baseUrl}}/anggaran/{{bulan}}
+Content-Type: application/json
+
+{
+  "totalBulanan": 5000000,
+  "pokok": 3000000,
+  "nabung": 1250000,
+  "belanja": 750000
+}
+
+### ERROR 400 - total alokasi tidak sama dengan uang bulanan
+PUT {{baseUrl}}/anggaran/{{bulan}}
+Content-Type: application/json
+
+{
+  "totalBulanan": 5000000,
+  "pokok": 3000000,
+  "nabung": 1000000,
+  "belanja": 500000
 }

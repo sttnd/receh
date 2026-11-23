@@ -13,43 +13,48 @@ export class PengeluaranService {
   private readonly data: Pengeluaran[] = [
     {
       id: 1,
-      keterangan: 'Makan siang di warteg',
+      keterangan: 'Belanja kebutuhan dapur',
       kategori: 'Makanan',
-      nominal: 15000,
-      tanggal: '2026-10-20',
-      createdAt: new Date('2026-10-20T08:00:00.000Z'),
+      posAnggaran: 'Pokok',
+      nominal: 85000,
+      tanggal: '2026-11-20',
+      createdAt: new Date('2026-11-20T08:00:00.000Z'),
     },
     {
       id: 2,
-      keterangan: 'Bensin motor',
+      keterangan: 'Isi bensin motor',
       kategori: 'Transportasi',
-      nominal: 25000,
-      tanggal: '2026-10-21',
-      createdAt: new Date('2026-10-21T08:00:00.000Z'),
+      posAnggaran: 'Pokok',
+      nominal: 30000,
+      tanggal: '2026-11-21',
+      createdAt: new Date('2026-11-21T08:00:00.000Z'),
     },
     {
       id: 3,
-      keterangan: 'Fotokopi modul praktikum',
-      kategori: 'Pendidikan',
-      nominal: 12000,
-      tanggal: '2026-10-22',
-      createdAt: new Date('2026-10-22T08:00:00.000Z'),
+      keterangan: 'Bayar paket internet',
+      kategori: 'Tagihan',
+      posAnggaran: 'Pokok',
+      nominal: 65000,
+      tanggal: '2026-11-22',
+      createdAt: new Date('2026-11-22T08:00:00.000Z'),
     },
     {
       id: 4,
-      keterangan: 'Paket data bulanan',
-      kategori: 'Lainnya',
-      nominal: 55000,
-      tanggal: '2026-10-23',
-      createdAt: new Date('2026-10-23T08:00:00.000Z'),
+      keterangan: 'Kopi dan camilan',
+      kategori: 'Hiburan',
+      posAnggaran: 'Belanja',
+      nominal: 28000,
+      tanggal: '2026-11-22',
+      createdAt: new Date('2026-11-22T10:00:00.000Z'),
     },
     {
       id: 5,
-      keterangan: 'Nonton bareng teman',
-      kategori: 'Hiburan',
-      nominal: 40000,
-      tanggal: '2026-10-24',
-      createdAt: new Date('2026-10-24T08:00:00.000Z'),
+      keterangan: 'Makan siang',
+      kategori: 'Makanan',
+      posAnggaran: 'Pokok',
+      nominal: 22000,
+      tanggal: '2026-11-23',
+      createdAt: new Date('2026-11-23T05:00:00.000Z'),
     },
   ];
 
@@ -123,13 +128,14 @@ export class PengeluaranService {
         item.keterangan.trim().toLowerCase() ===
           candidate.keterangan?.trim().toLowerCase() &&
         item.kategori === candidate.kategori &&
+        item.posAnggaran === candidate.posAnggaran &&
         item.nominal === candidate.nominal &&
         item.tanggal === candidate.tanggal,
     );
 
     if (isDuplicate) {
       throw new ConflictException(
-        'Transaksi dengan keterangan, kategori, nominal, dan tanggal yang sama sudah ada.',
+        'Transaksi dengan detail yang sama sudah ada pada tanggal tersebut.',
       );
     }
   }

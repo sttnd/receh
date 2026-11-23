@@ -12,6 +12,8 @@ import {
 import {
   KATEGORI_PENGELUARAN,
   KategoriPengeluaran,
+  POS_ANGGARAN,
+  PosAnggaran,
 } from '../entities/pengeluaran.entity';
 
 export class CreatePengeluaranDto {
@@ -21,9 +23,14 @@ export class CreatePengeluaranDto {
   keterangan: string;
 
   @IsIn([...KATEGORI_PENGELUARAN], {
-    message: 'Kategori harus Makanan, Transportasi, Pendidikan, Hiburan, atau Lainnya.',
+    message: 'Kategori pengeluaran tidak valid.',
   })
   kategori: KategoriPengeluaran;
+
+  @IsIn([...POS_ANGGARAN], {
+    message: 'Pos anggaran harus Pokok, Nabung, atau Belanja.',
+  })
+  posAnggaran: PosAnggaran;
 
   @Type(() => Number)
   @IsNumber(
