@@ -1,6 +1,6 @@
 # Receh
 
-Receh adalah aplikasi pengelolaan uang bulanan dan pencatatan pengeluaran. Aplikasi membantu pengguna membagi uang bulanan ke tiga pos, memantau penggunaan dana, dan mencatat transaksi harian.
+Receh adalah aplikasi pengelolaan uang bulanan dan pencatatan pengeluaran. Aplikasi membantu pengguna membagi uang bulanan ke tiga pos, memantau penggunaan dana, dan mencatat transaksi harian. Memiliki fitur utama seperti dashboard bulanan, tiga pos anggaran, sistem anggaran berjenjang, CRUD transaksi, pencarian dan filter.
 
 ## Struktur Repository
 
